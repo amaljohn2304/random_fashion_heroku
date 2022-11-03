@@ -70,12 +70,12 @@ const retrieveShirt = async (id) =>{
     const pieceId= await connection.query(`SELECT MAX(pieceId) FROM shirt_collection`);
         var Id= await pieceId;
         var maxId=Id[0][0]['MAX(pieceId)'];
-        var r1=Math.floor(Math.random() * maxId)
-        var r2=Math.floor(Math.random() * maxId)
-        var r3=Math.floor(Math.random() * maxId)
-        var r4=Math.floor(Math.random() * maxId)
-        var r5=Math.floor(Math.random() * maxId)
-        var r6=Math.floor(Math.random() * maxId)
+        var r1=Math.floor(Math.random() * maxId)+1
+        var r2=Math.floor(Math.random() * maxId)+1
+        var r3=Math.floor(Math.random() * maxId)+1
+        var r4=Math.floor(Math.random() * maxId)+1
+        var r5=Math.floor(Math.random() * maxId)+1
+        var r6=Math.floor(Math.random() * maxId)+1
 
 
         
