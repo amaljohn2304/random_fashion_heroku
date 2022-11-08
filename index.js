@@ -38,6 +38,65 @@ const insertDBShirt = async (color,colorRating,pattern,patternRating,fabric,fabr
 
 };
 
+
+const insertUsers = async (username,password,number,email) =>{
+    console.log("hello"); 
+    const connection = await mysql.createConnection({
+        host: "sql12.freesqldatabase.com",
+        user: "sql12537936",
+        password: "kTVQwPmi8z",
+        database: "sql12537936",
+        port: 3306,
+    })
+
+
+    
+    console.log("hello"); 
+    var id= await(connection.query(`SELECT MAX(id) from users`));
+    console.log(id) 
+        var finalId=id[0][0]["MAX(id)"]+1
+        console.log(finalId) 
+
+    try{
+        await connection.query(
+            `INSERT INTO users (username,password,number,email,id) VALUES 
+            ('${username}','${password}','${number}','${email}','${finalId}')`);
+            console.log("Insertion done",username,password,number,email);
+            
+    }
+    catch(e){
+        console.log(e); 
+    }
+
+
+    
+
+};
+
+const loginHandle = async (email,password) =>{
+    console.log("hello"); 
+    const connection = await mysql.createConnection({
+        host: "sql12.freesqldatabase.com",
+        user: "sql12537936",
+        password: "kTVQwPmi8z",
+        database: "sql12537936",
+        port: 3306,
+    })
+
+    var dets= await(connection.query(`SELECT * from users where email='${email}'`));
+    console.log(dets[0][0]) 
+    var response ={"Approval_status":"nil","Approval_code":0}
+    console.log(password,dets[0][0].password)
+    if(password==dets[0][0].password){
+        console.log(password,dets[0][0].password)
+        response ={"Approval_status":"success","Approval_code":1}
+        return response
+    }
+
+    
+
+};
+
 const insertDBPant = async (type,typeRating,color,colorRating,pattern,patternRating,fabric,fabricRating,fit,fitRating,pieceId) =>{
     const connection = await mysql.createConnection({
         host: "sql12.freesqldatabase.com",
@@ -182,6 +241,17 @@ app.get('/shirt/:pieceId',async (req,res)=>{
         "desc":a
     }
     res.send(ret);
+});
+
+app.post('/register',(req,res)=>{
+    insertUsers(req.body.username,req.body.password,req.body.number,req.body.email);
+    res.send(req.body);
+});
+
+app.post('/login',async (req,res)=>{
+    var approval= await loginHandle(req.body.email,req.body.password);
+    console.log(approval)
+    res.send(approval);
 });
 
 
