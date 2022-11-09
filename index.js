@@ -83,13 +83,24 @@ const loginHandle = async (email,password) =>{
         port: 3306,
     })
 
-    var dets= await(connection.query(`SELECT * from users where email='${email}'`));
-    console.log(dets[0][0]) 
-    var response ={"Approval_status":"nil","Approval_code":0}
+    
+        var dets= await(connection.query(`SELECT * from users where email='${email}'`));
+    
+
+        var response ={"Approval_status":"nil","Approval_code":0}
+
+    if(dets[0].length==0){
+        response ={"Approval_status":"success","Approval_code":0}
+        return response
+    }
     console.log(password,dets[0][0].password)
     if(password==dets[0][0].password){
         console.log(password,dets[0][0].password)
         response ={"Approval_status":"success","Approval_code":1}
+        return response
+    }
+    else{
+        response ={"Approval_status":"success","Approval_code":0}
         return response
     }
 
