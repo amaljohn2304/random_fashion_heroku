@@ -216,6 +216,7 @@ const retrievePants = async () =>{
     }
     catch(e){
         console.log(e); 
+        console.log(s);
     }
 };
 
