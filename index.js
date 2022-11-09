@@ -251,7 +251,7 @@ app.post('/register',(req,res)=>{
 
 app.post('/login',async (req,res)=>{
     var approval= await loginHandle(req.body.email,req.body.password);
-    console.log(approval)
+    
     res.send(approval);
 });
 
