@@ -53,10 +53,16 @@ const insertUsers = async (username,password,number,email) =>{
     
     console.log("hello"); 
     var id= await(connection.query(`SELECT MAX(id) from users`));
-    console.log(id) 
         var finalId=id[0][0]["MAX(id)"]+1
-        console.log(finalId) 
+        var m_ids= await(connection.query(`SELECT * from users where email='${email}'`));
+        console.log(m_ids[0])
+        if(m_ids[0].length>0){
+            var response = {"Approval_status":"mail already exists","Approval_code":0}
+            console.log(response)
+            return response
+        }
 
+        
     try{
         await connection.query(
             `INSERT INTO users (username,password,number,email,id) VALUES 
@@ -69,6 +75,9 @@ const insertUsers = async (username,password,number,email) =>{
     }
 
 
+    
+        var res={"Approval_status":"REgistration Approved","Approval_code":1}
+        return res
     
 
 };
@@ -255,9 +264,10 @@ app.get('/shirt/:pieceId',async (req,res)=>{
     res.send(ret);
 });
 
-app.post('/register',(req,res)=>{
-    insertUsers(req.body.username,req.body.password,req.body.number,req.body.email);
-    res.send(req.body);
+app.post('/register',async (req,res)=>{
+    var approval = await insertUsers(req.body.username,req.body.password,req.body.number,req.body.email);
+
+    res.send(approval);
 });
 
 app.post('/login',async (req,res)=>{
