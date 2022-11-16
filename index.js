@@ -278,7 +278,7 @@ const retrieveShirt = async (id) =>{
         const rating=colorR[0][0]['colorRating']+patternR[0][0]['patternRating']+fabricR[0][0]['fabricRating']+sleeveR[0][0]['sleeveRating']+collarR[0][0]['collarRating']+fitR[0][0]['fitRating'];
         console.log(rating);
         
-        if(rating>300)
+        if(rating>100)
             {
                 return string;
             }
