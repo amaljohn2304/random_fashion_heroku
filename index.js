@@ -359,7 +359,7 @@ const retrievePants = async () =>{
         const rating=colorR[0][0]['colorRating']+patternR[0][0]['patternRating']+fabricR[0][0]['fabricRating']+typeR[0][0]['typeRating']+fitR[0][0]['fitRating'];
         console.log(rating);
         
-        if(rating>280)
+        if(rating>80)
             {
                 console.log(string)
                 return string;
