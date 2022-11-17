@@ -101,6 +101,11 @@ const insertUsers = async (username,password,number,email) =>{
             `INSERT INTO users (username,password,number,email,id) VALUES 
             ('${username}','${password}','${number}','${email}','${finalId}')`);
             console.log("Insertion done",username,password,number,email);
+        
+            await connection.query(
+                `INSERT INTO wishlist (email,wish) VALUES 
+                ('${email}','')`);
+                
             
     }
     catch(e){
@@ -386,16 +391,27 @@ const insertDBwish = async (email,wish) =>{
         database: "sql12537936",
         port: 3306,
     })
-
+        var emailFound=0;
+        var alldeets= await(connection.query(`SELECT email from wishlist`));
+        console.log(alldeets[0]);
+        for(let i=0;i<alldeets[0].length;i++){
+            if(email==alldeets[0][i].email){
+                emailFound=1;
+                console.log(emailFound)
+            }
+        }
+        if(emailFound==0){
+            await connection.query(
+                `INSERT INTO wishlist (email,wish) VALUES 
+                ('${email}','${wish}')`);
+                return
+        }
     
         var dets= await(connection.query(`SELECT wish from wishlist where email='${email}'`));
         console.log(dets[0][0].wish)
         var newWish=dets[0][0].wish+','+wish
-        console.log(newWish)
-
         await connection.query(`UPDATE wishlist SET wish='${newWish}' WHERE email='${email}'`);
 
-    
 
 };
 
