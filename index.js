@@ -132,17 +132,18 @@ const loginHandle = async (email,password) =>{
         var response ={"Approval_status":"nil","Approval_code":0}
 
     if(dets[0].length==0){
-        response ={"Approval_status":"success","Approval_code":0}
+        response ={"Approval_status":"unavailable user","Approval_code":0}
         return response
     }
     console.log(password,dets[0][0].password)
     if(password==dets[0][0].password){
         console.log(password,dets[0][0].password)
-        response ={"Approval_status":"success","Approval_code":1}
+        response ={"Approval_status":"fail","Approval_code":0,"email":dets[0][0].email,"username":dets[0][0].username,"number":dets[0][0].number,}
+
         return response
     }
     else{
-        response ={"Approval_status":"success","Approval_code":0}
+        response ={"Approval_status":"fail","Approval_code":0,"email":dets[0][0].email,"username":dets[0][0].username,"number":dets[0][0].number,}
         return response
     }
 
