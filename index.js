@@ -431,7 +431,7 @@ const findWish = async (email) =>{
         console.log(dets[0][0].wish)
         var newWish=dets[0][0].wish
         console.log(newWish)
-//1
+//11
         return newWish
     
 
