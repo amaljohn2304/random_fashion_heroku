@@ -501,7 +501,10 @@ app.post('/makewish',async (req,res)=>{
 
 app.post('/findwish',async (req,res)=>{
     var result=await findWish(req.body.email);
-    res.send(result);
+    var final={
+        wishes:result
+    }
+    res.send(final);
 });
 
 
