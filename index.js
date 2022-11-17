@@ -375,6 +375,51 @@ const retrievePants = async () =>{
 
 
 
+
+const insertDBwish = async (email,wish) =>{
+    console.log("wish"); 
+    const connection = await mysql.createConnection({
+        host: "sql12.freesqldatabase.com",
+        user: "sql12537936",
+        password: "kTVQwPmi8z",
+        database: "sql12537936",
+        port: 3306,
+    })
+
+    
+        var dets= await(connection.query(`SELECT wish from wishlist where email='${email}'`));
+        console.log(dets[0][0].wish)
+        var newWish=dets[0][0].wish+','+wish
+        console.log(newWish)
+
+        await connection.query(`UPDATE wishlist SET wish='${newWish}' WHERE email='${email}'`);
+
+    
+
+};
+
+
+const findWish = async (email) =>{
+    console.log("wish"); 
+    const connection = await mysql.createConnection({
+        host: "sql12.freesqldatabase.com",
+        user: "sql12537936",
+        password: "kTVQwPmi8z",
+        database: "sql12537936",
+        port: 3306,
+    })
+
+    
+        var dets= await(connection.query(`SELECT wish from wishlist where email='${email}'`));
+        console.log(dets[0][0].wish)
+        var newWish=dets[0][0].wish
+        console.log(newWish)
+
+        return newWish
+    
+
+};
+
 ///paths and stuff
 app.use(express.json());
 
@@ -430,6 +475,16 @@ app.post('/shirt',(req,res)=>{
 app.post('/pants',(req,res)=>{
     insertDBPant(req.body.type,req.body.color,req.body.pattern,req.body.fabric,req.body.fit);
     res.send(req.body);
+});
+
+app.post('/makewish',async (req,res)=>{
+    insertDBwish(req.body.email,req.body.wish);
+    res.send(req.body);
+});
+
+app.post('/findwish',async (req,res)=>{
+    var result=await findWish(req.body.email);
+    res.send(result);
 });
 
 
